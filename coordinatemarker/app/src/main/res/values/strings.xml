@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">Coordinate Marker</string>
+    <!-- description -->
+    <string name="app_desc">좌표를 입력하여 지도에 마커를 표시하는 플러그인입니다.</string>
+
+
+
+
+</resources>
