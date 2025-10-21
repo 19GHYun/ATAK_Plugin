@@ -1,0 +1,7 @@
+#Tue Oct 21 15:39:15 KST 2025
+base.1=C\:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\clicktocoordinate\\app\\build\\intermediates\\dex\\civDebug\\mergeProjectDexCivDebug\\11\\classes.dex
+path.1=11/classes.dex
+base.0=C\:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\clicktocoordinate\\app\\build\\intermediates\\dex\\civDebug\\mergeProjectDexCivDebug\\0\\classes.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+path.0=0/classes.dex
