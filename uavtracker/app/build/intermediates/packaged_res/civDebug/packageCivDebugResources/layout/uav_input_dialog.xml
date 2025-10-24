@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 위도 입력 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="위도 (Latitude)"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/uav_latitude_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="예: 37.5665"
+            android:inputType="numberDecimal|numberSigned"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- 경도 입력 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경도 (Longitude)"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/uav_longitude_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="예: 126.9780"
+            android:inputType="numberDecimal|numberSigned"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- 고도 입력 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="고도 (Altitude - 미터)"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/uav_altitude_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="예: 100"
+            android:inputType="numberDecimal"
+            android:text="100"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- 속도 입력 (선택사항) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="속도 (m/s - 선택사항)"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/uav_speed_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="예: 15"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- 방향 입력 (선택사항) -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="방향 (도 - 선택사항)"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/uav_heading_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="예: 180 (0-360)"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- UAV 종류 선택 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UAV 종류"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <Spinner
+            android:id="@+id/uav_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"/>
+
+    </LinearLayout>
+</ScrollView>

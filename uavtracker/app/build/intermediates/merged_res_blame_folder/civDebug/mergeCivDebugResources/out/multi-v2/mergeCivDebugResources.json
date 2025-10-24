@@ -1,0 +1,98 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.atakmap.android.uavtracker.plugin.app-civDebug-5:/values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "C:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\uavtracker\\app\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "4,5,3",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "100,146,60",
+                        "endColumns": "45,48,39",
+                        "endOffsets": "141,190,95"
+                    },
+                    "to": {
+                        "startLines": "12,13,14",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "427,473,522",
+                        "endColumns": "45,48,39",
+                        "endOffsets": "468,517,557"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\uavtracker\\app\\src\\main\\res\\values\\dimen.xml",
+                    "from": {
+                        "startLines": "17,4",
+                        "startColumns": "4,4",
+                        "startOffsets": "947,196",
+                        "endColumns": "41,39",
+                        "endOffsets": "984,231"
+                    },
+                    "to": {
+                        "startLines": "15,16",
+                        "startColumns": "4,4",
+                        "startOffsets": "562,604",
+                        "endColumns": "41,39",
+                        "endOffsets": "599,639"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\uavtracker\\app\\build\\generated\\res\\resValues\\civ\\debug\\values\\gradleResValues.xml",
+                    "from": {
+                        "startLines": "6",
+                        "startColumns": "4",
+                        "startOffsets": "155",
+                        "endColumns": "77",
+                        "endOffsets": "228"
+                    },
+                    "to": {
+                        "startLines": "19",
+                        "startColumns": "4",
+                        "startOffsets": "770",
+                        "endColumns": "77",
+                        "endOffsets": "843"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\uavtracker\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "70,3,66,86,78,15,47,56,92,105,112,99",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "3351,49,3212,4128,3753,778,2354,2678,4390,4920,5127,4668",
+                        "endLines": "76,12,68,88,84,40,53,63,96,107,122,103",
+                        "endColumns": "12,12,12,12,12,12,12,12,12,12,12,12",
+                        "endOffsets": "3747,771,3345,4279,4121,2178,2640,3205,4661,5068,5710,4914"
+                    },
+                    "to": {
+                        "startLines": "20,27,37,40,43,50,64,67,75,80,83,94",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "848,1025,1752,1890,2046,2419,2982,3065,3597,3873,4026,4614",
+                        "endLines": "26,36,39,42,49,63,66,74,79,82,93,98",
+                        "endColumns": "12,12,12,12,12,12,12,12,12,12,12,12",
+                        "endOffsets": "1020,1747,1885,2041,2414,2977,3060,3592,3868,4021,4609,4860"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\uavtracker\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "8,5,3",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "247,146,72",
+                        "endLines": "17,5,3",
+                        "endColumns": "19,76,48",
+                        "endOffsets": "614,218,116"
+                    },
+                    "to": {
+                        "startLines": "2,17,18",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,644,721",
+                        "endLines": "11,17,18",
+                        "endColumns": "19,76,48",
+                        "endOffsets": "422,716,765"
+                    }
+                }
+            ]
+        }
+    ]
+}

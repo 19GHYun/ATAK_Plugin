@@ -1,0 +1,7 @@
+#Fri Oct 24 17:10:22 KST 2025
+base.1=C\:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\uavtracker\\app\\build\\intermediates\\dex\\civDebug\\mergeProjectDexCivDebug\\8\\classes.dex
+path.1=8/classes.dex
+base.0=C\:\\Users\\MSI\\Desktop\\YGH\\devlop\\ATAK\\ATAK-CIV-5.5.1.6-SDK\\samples\\uavtracker\\app\\build\\intermediates\\dex\\civDebug\\mergeProjectDexCivDebug\\0\\classes.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+path.0=0/classes.dex

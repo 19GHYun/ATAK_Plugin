@@ -1,0 +1,37 @@
+R_DEF: Internal format may change without notice
+local
+array uav_types
+color darker_gray
+color heading_yellow
+color white
+dimen auto_margin
+dimen fontSize
+drawable btn_gray
+drawable ic_launcher
+drawable new_dark_button_bg
+drawable new_dark_button_disabled
+drawable new_dark_button_selected
+id uav_altitude_input
+id uav_heading_input
+id uav_latitude_input
+id uav_longitude_input
+id uav_speed_input
+id uav_type_spinner
+layout main_layout
+layout uav_input_dialog
+string app_desc
+string app_name
+string versionName
+style ATAKEditText
+style ATAKPluginTheme
+style ATAKSpinner
+style ATAKSpinnerDropDownItem
+style ATAKSpinnerItem
+style ATAKTheme
+style AppBaseTheme
+style AppTheme
+style FullDropdownStyle
+style PopupMenuTextAppearance
+style darkButton
+style unpaddedButton
+xml com_android_vending_archive_opt_out

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">UAV Tracker</string>
+    <!-- description -->
+    <string name="app_desc">Counter-UAS: UAV 위치를 추적하고 관리하는 플러그인입니다.</string>
+
+    <!-- UAV Types -->
+    <string-array name="uav_types">
+        <item>Unknown (알 수 없음)</item>
+        <item>Quadcopter (쿼드콥터)</item>
+        <item>Hexacopter (헥사콥터)</item>
+        <item>Octocopter (옥토콥터)</item>
+        <item>Fixed-wing (고정익)</item>
+        <item>Hybrid VTOL (하이브리드)</item>
+        <item>Racing Drone (레이싱 드론)</item>
+        <item>Military UAV (군용)</item>
+    </string-array>
+
+</resources>
