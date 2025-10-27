@@ -2,6 +2,8 @@ package com.atakmap.android.uavtracker.plugin;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import com.atakmap.android.maps.MapItem;
 import com.atakmap.android.maps.MapEvent;
 import com.atakmap.android.maps.MapEventDispatcher;
 import com.atakmap.coremap.maps.coords.GeoPoint;
+import com.atakmap.coremap.maps.assets.Icon;
 
 import java.util.UUID;
 import java.text.SimpleDateFormat;
@@ -41,7 +44,9 @@ public class PluginTemplate implements IPlugin {
     Context pluginContext;
     IHostUIService uiService;
     ToolbarItem toolbarItem;
+    ToolbarItem mapToolbarItem;
     UAVManager uavManager;
+    VWorldMapComponent vworldMapComponent;
 
     public PluginTemplate(IServiceController serviceController) {
         this.serviceController = serviceController;
@@ -55,12 +60,15 @@ public class PluginTemplate implements IPlugin {
         // UAV Manager 초기화
         uavManager = UAVManager.getInstance();
 
+        // VWorld Map Component 초기화
+        vworldMapComponent = new VWorldMapComponent();
+
         // obtain the UI service
         uiService = serviceController.getService(IHostUIService.class);
 
-        // initialize the toolbar button for the plugin
+        // initialize the toolbar button for the plugin (UAV 추가)
         toolbarItem = new ToolbarItem.Builder(
-                pluginContext.getString(R.string.app_name),
+                "UAV Tracker",
                 MarshalManager.marshal(
                         pluginContext.getResources().getDrawable(R.drawable.ic_launcher),
                         android.graphics.drawable.Drawable.class,
@@ -69,6 +77,21 @@ public class PluginTemplate implements IPlugin {
                     @Override
                     public void onClick(ToolbarItem item) {
                         showUAVInputDialog();
+                    }
+                })
+                .build();
+
+        // VWorld 지도 툴바 버튼 생성
+        mapToolbarItem = new ToolbarItem.Builder(
+                "Korean Map",
+                MarshalManager.marshal(
+                        pluginContext.getResources().getDrawable(R.drawable.ic_launcher),
+                        android.graphics.drawable.Drawable.class,
+                        gov.tak.api.commons.graphics.Bitmap.class))
+                .setListener(new ToolbarItemAdapter() {
+                    @Override
+                    public void onClick(ToolbarItem item) {
+                        showVWorldMapDialog();
                     }
                 })
                 .build();
@@ -81,6 +104,13 @@ public class PluginTemplate implements IPlugin {
             return;
 
         uiService.addToolbarItem(toolbarItem);
+        uiService.addToolbarItem(mapToolbarItem);
+
+        // VWorld Map Component 시작
+        MapView mapView = MapView.getMapView();
+        if (mapView != null) {
+            vworldMapComponent.onCreate(pluginContext, null, mapView);
+        }
 
         // 마커 클릭 리스너는 각 마커마다 개별 등록됨
     }
@@ -92,6 +122,13 @@ public class PluginTemplate implements IPlugin {
             return;
 
         uiService.removeToolbarItem(toolbarItem);
+        uiService.removeToolbarItem(mapToolbarItem);
+
+        // VWorld Map Component 정리
+        MapView mapView = MapView.getMapView();
+        if (mapView != null && vworldMapComponent != null) {
+            vworldMapComponent.onDestroyImpl(pluginContext, mapView);
+        }
 
         // 모든 UAV 제거
         uavManager.removeAllUAVs();
@@ -217,6 +254,12 @@ public class PluginTemplate implements IPlugin {
     }
 
     /**
+     * 대한민국 중심 좌표 (서울)
+     */
+    private static final double KOREA_LAT = 37.5665;
+    private static final double KOREA_LON = 126.9780;
+
+    /**
      * UAV 추가
      */
     private void addUAV(double latitude, double longitude, double altitude,
@@ -270,7 +313,44 @@ public class PluginTemplate implements IPlugin {
             // 마커 설정
             marker.setClickable(true);
 
-            // 위협 레벨에 따른 색상 설정
+            // UAV가 대한민국 쪽으로 가는지 판단
+            boolean headingToKorea = isHeadingToKorea(latitude, longitude, heading);
+
+            // 방향에 따른 마커 아이콘 설정
+            try {
+                // 자동 아이콘 변경 방지
+                marker.setMetaBoolean("adapt_marker_icon", false);
+
+                int iconResId;
+                if (headingToKorea) {
+                    // 대한민국 쪽으로 오는 경우 - 빨간색 마커
+                    iconResId = R.drawable.rd;
+                } else {
+                    // 대한민국 반대쪽으로 가는 경우 - 파란색 마커
+                    iconResId = R.drawable.bd;
+                }
+
+                // 커스텀 아이콘 URI 생성
+                String iconUri = "android.resource://" + pluginContext.getPackageName() + "/" + iconResId;
+
+                // Icon.Builder를 사용하여 아이콘 생성
+                Icon.Builder iconBuilder = new Icon.Builder();
+                iconBuilder.setImageUri(Icon.STATE_DEFAULT, iconUri);
+                iconBuilder.setAnchor(16, 16);  // 아이콘 중심점 설정
+                iconBuilder.setSize(32, 32);    // 아이콘 크기 설정
+
+                // 마커에 아이콘 적용
+                marker.setIcon(iconBuilder.build());
+
+            } catch (Exception e) {
+                // 아이콘 로드 실패 시 기본 색상 사용
+                Toast.makeText(pluginContext,
+                    "아이콘 로드 실패: " + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+
+            // 위협 레벨에 따른 색상 설정 (아이콘이 없을 경우 대비)
             int color;
             switch (uavInfo.getThreatLevel()) {
                 case HIGH:
@@ -464,6 +544,57 @@ public class PluginTemplate implements IPlugin {
     }
 
     /**
+     * UAV가 대한민국 쪽으로 향하고 있는지 판단
+     * @param uavLat UAV의 위도
+     * @param uavLon UAV의 경도
+     * @param heading UAV의 heading (0-360도, 북쪽이 0도)
+     * @return 대한민국 쪽으로 가면 true, 반대쪽으로 가면 false
+     */
+    private boolean isHeadingToKorea(double uavLat, double uavLon, double heading) {
+        // UAV에서 대한민국(서울)을 향하는 방위각 계산
+        double bearingToKorea = calculateBearing(uavLat, uavLon, KOREA_LAT, KOREA_LON);
+
+        // Heading과 bearingToKorea의 차이 계산
+        double diff = Math.abs(heading - bearingToKorea);
+
+        // 각도 차이를 0-180도 범위로 정규화
+        if (diff > 180) {
+            diff = 360 - diff;
+        }
+
+        // 차이가 90도 이하이면 대한민국 쪽으로 가는 것으로 판단
+        // 90도보다 크면 대한민국 반대쪽으로 가는 것
+        return diff <= 90;
+    }
+
+    /**
+     * 두 지점 사이의 방위각(bearing) 계산
+     * @param lat1 시작점 위도
+     * @param lon1 시작점 경도
+     * @param lat2 목표점 위도
+     * @param lon2 목표점 경도
+     * @return 방위각 (0-360도, 북쪽이 0도)
+     */
+    private double calculateBearing(double lat1, double lon1, double lat2, double lon2) {
+        // 위도/경도를 라디안으로 변환
+        double lat1Rad = Math.toRadians(lat1);
+        double lat2Rad = Math.toRadians(lat2);
+        double lonDiff = Math.toRadians(lon2 - lon1);
+
+        // Bearing 계산 (Haversine 공식 사용)
+        double y = Math.sin(lonDiff) * Math.cos(lat2Rad);
+        double x = Math.cos(lat1Rad) * Math.sin(lat2Rad) -
+                   Math.sin(lat1Rad) * Math.cos(lat2Rad) * Math.cos(lonDiff);
+
+        double bearing = Math.toDegrees(Math.atan2(y, x));
+
+        // 0-360도 범위로 정규화
+        bearing = (bearing + 360) % 360;
+
+        return bearing;
+    }
+
+    /**
      * 각도를 나침반 방향으로 변환
      */
     private String getCompassDirection(double heading) {
@@ -489,8 +620,29 @@ public class PluginTemplate implements IPlugin {
             }
 
             if (!is3DMode) {
-                // 3D 모드로 전환
-                mapView.getMapController().tiltTo(60, true);  // 60도 기울이기
+                // 3D 모드로 전환 - 지형이 보이도록 최적화된 설정
+
+                // 1. 카메라 기울이기 (45-70도가 지형을 보기 좋음)
+                mapView.getMapController().tiltTo(65, true);
+
+                // 2. 지형 렌더링 활성화 시도
+                try {
+                    // MapView의 preferences를 통해 3D 지형 활성화
+                    android.content.SharedPreferences prefs =
+                        android.preference.PreferenceManager.getDefaultSharedPreferences(
+                            mapView.getContext());
+                    android.content.SharedPreferences.Editor editor = prefs.edit();
+
+                    // ATAK의 3D 지형 관련 설정 활성화
+                    editor.putBoolean("atakControlForceThreeDimensionalRendering", true);
+                    editor.putBoolean("terrain_enabled", true);
+                    editor.putInt("terrain_level", 5);  // 지형 상세도 (0-9)
+                    editor.apply();
+
+                } catch (Exception e) {
+                    // 설정 실패해도 계속 진행
+                    e.printStackTrace();
+                }
 
                 // UAV가 있으면 첫 번째 UAV 위치로 이동하며 3D 뷰 적용
                 java.util.List<UAVInfo> uavList = uavManager.getAllUAVs();
@@ -504,20 +656,35 @@ public class PluginTemplate implements IPlugin {
                     // 카메라 위치와 각도 설정
                     mapView.getMapController().panTo(point, true);
 
-                    // 적절한 줌 레벨 설정 (UAV를 잘 볼 수 있도록)
+                    // 3D 뷰에 최적화된 줌 레벨 (너무 가까우면 지형이 안 보임)
                     double scale = mapView.getMapScale();
-                    if (scale > 5000) {
-                        mapView.getMapController().zoomTo(5000, true);
+                    if (scale > 10000) {
+                        mapView.getMapController().zoomTo(8000, true);
+                    } else if (scale < 2000) {
+                        mapView.getMapController().zoomTo(3000, true);
                     }
                 }
 
                 is3DMode = true;
                 Toast.makeText(pluginContext,
-                    "3D 뷰 활성화\n(고도 정보가 입체로 표시됩니다)",
+                    "3D 지형 뷰 활성화\n(지형의 고저차가 표시됩니다)\n※ 지형 데이터가 있는 지역에서만 보입니다",
                     Toast.LENGTH_LONG).show();
             } else {
                 // 2D 모드로 전환
-                mapView.getMapController().tiltTo(0, true);  // 평면으로
+                mapView.getMapController().tiltTo(0, true);
+
+                try {
+                    // 3D 렌더링 설정 해제 (선택사항)
+                    android.content.SharedPreferences prefs =
+                        android.preference.PreferenceManager.getDefaultSharedPreferences(
+                            mapView.getContext());
+                    android.content.SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("atakControlForceThreeDimensionalRendering", false);
+                    editor.apply();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 is3DMode = false;
                 Toast.makeText(pluginContext,
                     "2D 뷰로 전환",
@@ -577,6 +744,88 @@ public class PluginTemplate implements IPlugin {
                 Toast.LENGTH_SHORT).show();
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * VWorld 지도 설정 다이얼로그 표시
+     */
+    private void showVWorldMapDialog() {
+        try {
+            MapView mapView = MapView.getMapView();
+            if (mapView == null) {
+                Toast.makeText(pluginContext, "지도를 찾을 수 없습니다", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Context mapContext = mapView.getContext();
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(pluginContext);
+            String currentApiKey = prefs.getString("vworld_api_key", "");
+
+            // API 키 입력 필드 생성
+            final EditText apiKeyInput = new EditText(mapContext);
+            apiKeyInput.setHint("VWorld API 키를 입력하세요");
+            apiKeyInput.setText(currentApiKey);
+            apiKeyInput.setSingleLine(true);
+
+            // 레이어 타입 선택 스피너
+            final Spinner layerSpinner = new Spinner(mapContext);
+            String[] layerTypes = {"Base (기본 지도)", "Satellite (위성 영상)", "Hybrid (하이브리드)", "Gray (회색 지도)"};
+            ArrayAdapter<String> layerAdapter = new ArrayAdapter<>(
+                mapContext,
+                android.R.layout.simple_spinner_item,
+                layerTypes
+            );
+            layerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            layerSpinner.setAdapter(layerAdapter);
+
+            // 레이아웃 구성
+            android.widget.LinearLayout layout = new android.widget.LinearLayout(mapContext);
+            layout.setOrientation(android.widget.LinearLayout.VERTICAL);
+            layout.setPadding(50, 40, 50, 10);
+            layout.addView(apiKeyInput);
+            layout.addView(layerSpinner);
+
+            new AlertDialog.Builder(mapContext)
+                .setTitle("VWorld 한국 지도 설정")
+                .setMessage("브이월드(VWorld) API를 사용하여 고품질 한국 지도를 표시합니다.\n\nAPI 키는 VWorld 사이트에서 무료로 발급받을 수 있습니다:\nhttps://www.vworld.kr/dev/v4dv_apihlpko_s001.do")
+                .setView(layout)
+                .setPositiveButton("적용", (dialog, which) -> {
+                    String apiKey = apiKeyInput.getText().toString().trim();
+
+                    if (apiKey.isEmpty()) {
+                        Toast.makeText(pluginContext,
+                            "API 키를 입력해주세요",
+                            Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    // 레이어 타입 매핑
+                    String layerType;
+                    switch (layerSpinner.getSelectedItemPosition()) {
+                        case 0: layerType = "BASE"; break;
+                        case 1: layerType = "SATELLITE"; break;
+                        case 2: layerType = "HYBRID"; break;
+                        case 3: layerType = "GRAY"; break;
+                        default: layerType = "BASE"; break;
+                    }
+
+                    // API 키 저장 및 레이어 적용
+                    vworldMapComponent.setApiKey(apiKey);
+                    vworldMapComponent.changeLayerType(layerType);
+
+                })
+                .setNeutralButton("비활성화", (dialog, which) -> {
+                    vworldMapComponent.toggleVWorldLayer(false);
+                })
+                .setNegativeButton("취소", null)
+                .show();
+
+        } catch (Exception e) {
+            Toast.makeText(pluginContext,
+                "에러: " + e.getMessage(),
+                Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }

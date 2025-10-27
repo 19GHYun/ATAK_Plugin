@@ -12,6 +12,10 @@
         "source": "com.atakmap.android.uavtracker.plugin.app-main-8:/drawable/new_dark_button_disabled.xml"
     },
     {
+        "merged": "com.atakmap.android.uavtracker.plugin.app-civDebug-5:/drawable_rd.png.flat",
+        "source": "com.atakmap.android.uavtracker.plugin.app-main-8:/drawable/rd.png"
+    },
+    {
         "merged": "com.atakmap.android.uavtracker.plugin.app-civDebug-5:/layout_uav_input_dialog.xml.flat",
         "source": "com.atakmap.android.uavtracker.plugin.app-main-8:/layout/uav_input_dialog.xml"
     },
@@ -30,5 +34,9 @@
     {
         "merged": "com.atakmap.android.uavtracker.plugin.app-civDebug-5:/drawable_btn_gray.xml.flat",
         "source": "com.atakmap.android.uavtracker.plugin.app-main-8:/drawable/btn_gray.xml"
+    },
+    {
+        "merged": "com.atakmap.android.uavtracker.plugin.app-civDebug-5:/drawable_bd.png.flat",
+        "source": "com.atakmap.android.uavtracker.plugin.app-main-8:/drawable/bd.png"
     }
 ]

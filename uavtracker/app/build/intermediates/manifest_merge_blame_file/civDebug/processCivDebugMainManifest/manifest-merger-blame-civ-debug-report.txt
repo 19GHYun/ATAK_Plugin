@@ -8,51 +8,59 @@
 8        android:minSdkVersion="21"
 9        android:targetSdkVersion="34" />
 10
-11    <application
-11-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:5:5-27:19
-12        android:allowBackup="false"
-12-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:6:9-36
-13        android:debuggable="true"
-14        android:description="@string/app_desc"
-14-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:9:9-47
-15        android:extractNativeLibs="true"
-16        android:icon="@drawable/ic_launcher"
-16-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:7:9-45
-17        android:label="@string/app_name"
-17-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:8:9-41
-18        android:theme="@style/AppTheme" >
-18-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:10:9-40
-19        <meta-data
-20            android:name="plugin-api"
-20-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:11:20-45
-21            android:value="com.atakmap.app@5.5.1.CIV" />
-21-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:11:46-79
-22        <meta-data
-22-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:12:9-78
-23            android:name="app_desc"
-23-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:12:20-43
-24            android:value="@string/app_desc" />
-24-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:12:44-76
-25
-26        <!--
-27            This fictitious activity entry allow for ATAK 4.6.0.2 and newer to perform 
-28            plugin discovery  android devices.  If this is removed, the plugin will 
-29            not be able to be discovered or loaded.
-30        -->
-31        <activity
-31-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:18:8-24:19
-32            android:name="com.atakmap.app.component"
-32-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:18:18-58
-33            android:exported="true" >
-33-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:19:12-35
-34            <intent-filter android:label="@string/app_name" >
-34-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:21:12-23:28
-34-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:21:27-59
-35                <action android:name="com.atakmap.app.component" />
-35-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:22:15-66
-35-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:22:23-63
-36            </intent-filter>
-37        </activity>
-38    </application>
-39
-40</manifest>
+11    <!-- VWorld 온라인 지도 다운로드를 위한 인터넷 권한 -->
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:6:5-67
+12-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:7:5-79
+13-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:7:22-76
+14
+15    <application
+15-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:9:5-31:19
+16        android:allowBackup="false"
+16-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:10:9-36
+17        android:debuggable="true"
+18        android:description="@string/app_desc"
+18-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:13:9-47
+19        android:extractNativeLibs="true"
+20        android:icon="@drawable/ic_launcher"
+20-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:11:9-45
+21        android:label="@string/app_name"
+21-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:12:9-41
+22        android:theme="@style/AppTheme" >
+22-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:14:9-40
+23        <meta-data
+24            android:name="plugin-api"
+24-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:15:20-45
+25            android:value="com.atakmap.app@5.5.1.CIV" />
+25-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:15:46-79
+26        <meta-data
+26-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:16:9-78
+27            android:name="app_desc"
+27-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:16:20-43
+28            android:value="@string/app_desc" />
+28-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:16:44-76
+29
+30        <!--
+31            This fictitious activity entry allow for ATAK 4.6.0.2 and newer to perform 
+32            plugin discovery  android devices.  If this is removed, the plugin will 
+33            not be able to be discovered or loaded.
+34        -->
+35        <activity
+35-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:22:8-28:19
+36            android:name="com.atakmap.app.component"
+36-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:22:18-58
+37            android:exported="true" >
+37-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:23:12-35
+38            <intent-filter android:label="@string/app_name" >
+38-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:25:12-27:28
+38-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:25:27-59
+39                <action android:name="com.atakmap.app.component" />
+39-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:26:15-66
+39-->C:\Users\MSI\Desktop\YGH\devlop\ATAK\ATAK-CIV-5.5.1.6-SDK\samples\uavtracker\app\src\main\AndroidManifest.xml:26:23-63
+40            </intent-filter>
+41        </activity>
+42    </application>
+43
+44</manifest>
